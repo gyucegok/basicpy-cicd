@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: basicpy
-          image: europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}
+          image: europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:COMMITSHA
           ports:
           - name: http-server
             containerPort: 8080
