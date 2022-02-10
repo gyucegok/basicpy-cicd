@@ -23,6 +23,10 @@ steps:
   - 'push'
   - 'europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}'
 
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - ['./getsha.sh']
 
 # This step creates a release in Cloud Deploy, promoting the image 
 # between environments will be done further in Cloud Deploy
