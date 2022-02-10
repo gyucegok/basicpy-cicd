@@ -1,0 +1,38 @@
+steps:
+# This step runs the unit tests on the app
+- name: 'python:3.7-slim'
+  id: Test
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - 'pip install flask && python ./src/app.py -v &'
+
+# This step builds the container image.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build
+  args:
+  - 'build'
+  - '-t'
+  - 'europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}'
+  - './src'
+
+# This step pushes the image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args:
+  - 'push'
+  - 'europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}'
+
+
+# This step creates a release in Cloud Deploy, promoting the image 
+# between environments will be done further in Cloud Deploy
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+      "deploy", "releases", "create", "rel-${SHORT_SHA}",
+      "--delivery-pipeline", "basicpy-deploy-pipe",
+      "--region", "europe-west1",
+      "--annotations", "commitId=${REVISION_ID}",
+      "--images", "basicpy=europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}"
+    ]
