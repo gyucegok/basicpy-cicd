@@ -23,6 +23,9 @@ steps:
   - 'push'
   - 'europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}'
 
+# We have pushed the container image with the GIT commit SHA, we also
+# need to hydrate our kubernetes manifests with the same SHA in order being
+# able to pull it in deploy time
 - name: 'bash'
   args:
   - 'sed'
