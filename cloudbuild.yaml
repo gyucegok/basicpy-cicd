@@ -29,7 +29,7 @@ steps:
   - '-i'
   - 'kubernetes-manifests/basicpydeploy.yaml'
   - '-e'
-  - '"s/COMMITSHA/${COMMIT_SHA}/g"'
+  - 's/COMMITSHA/${COMMIT_SHA}/g'
 
 # This step creates a release in Cloud Deploy, promoting the image 
 # between environments will be done further in Cloud Deploy
