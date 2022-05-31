@@ -1,0 +1,29 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+ name: basicpy-deploy-pipe
+description: main application pipeline
+serialPipeline:
+ stages:
+ - targetId: sandbox
+   profiles: []
+ - targetId: prod
+   profiles: []
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+ name: sandbox
+description: development cluster
+gke:
+ cluster: projects/gyucegok-alto/locations/europe-west1-b/clusters/sandbox
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+ name: prod
+description: production cluster
+gke:
+ cluster: projects/gyucegok-alto/locations/europe-west1-b/clusters/prod
