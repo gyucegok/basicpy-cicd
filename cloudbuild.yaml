@@ -40,9 +40,9 @@ steps:
   entrypoint: gcloud
   args:
     [
-      "deploy", "releases", "create", "rel-${SHORT_SHA}",
+      "deploy", "releases", "create", "rel-${COMMIT_SHA}",
       "--delivery-pipeline", "basicpy-deploy-pipe",
       "--region", "europe-west1",
-      "--annotations", "commitId=${REVISION_ID}",
+      "--annotations", "commitId=${COMMIT_SHA}",
       "--images", "basicpy=europe-west1-docker.pkg.dev/gyucegok-alto/dock/basicpy:${COMMIT_SHA}"
     ]
